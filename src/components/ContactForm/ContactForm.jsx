@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Form } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { postContact } from 'redux/operations';
