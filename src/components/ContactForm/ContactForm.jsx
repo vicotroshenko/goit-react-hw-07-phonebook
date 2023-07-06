@@ -1,12 +1,14 @@
+import { useEffect } from 'react';
 import { Form } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/operations';
+import { postContact } from 'redux/operations';
 import { getContacts } from 'redux/selectors';
+
 
 export const ContactForm = () => {
   const { items } = useSelector(getContacts);
   const dispatch = useDispatch();
-
+  
   
   const handleSubmit = event => {
     event.preventDefault();
@@ -20,7 +22,7 @@ export const ContactForm = () => {
         return;
       }
     }
-    dispatch(addContact({ name, phone }));
+    dispatch(postContact({ name, phone }));
   };
 
   return (

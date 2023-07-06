@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux';
 
-import { deleteContact } from 'redux/operations'; 
+import { deleteItem } from 'redux/operations'; 
 
 export const ListElements = ({ id, name, number }) => {
   const dispatch = useDispatch();
   const deleteElement = id => {
-    dispatch(deleteContact(id));
+    dispatch(deleteItem(id));
   };
 
   return (

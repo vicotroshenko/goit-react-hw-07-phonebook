@@ -1,5 +1,7 @@
 import axios from 'axios';
 import {
+  addContact,
+  deleteContact,
   fetchingInProgress,
   fetchingSuccess,
   fetchingError,
@@ -17,30 +19,24 @@ export const fetchContacts = () => async dispatch => {
   }
 };
 
-export const addContact =
+export const postContact =
   ({ name, phone }) =>
   async dispatch => {
     try {
-      dispatch(fetchingInProgress());
-      await axios.post('/material', {
+      const response = await axios.post('/material', {
         name,
         phone,
       });
-      const response = await axios.get('/material');
-      dispatch(fetchingSuccess(response.data));
+      dispatch(addContact(response.data));
     } catch (error) {
       dispatch(fetchingError(error.message));
     }
   };
 
-export const deleteContact = id => async dispatch => {
+export const deleteItem = id => async dispatch => {
   try {
-    dispatch(fetchingInProgress());
-
-    await axios.delete(`/material/${id}`);
-    const response = await axios.get('/material');
-
-    dispatch(fetchingSuccess(response.data));
+    const response = await axios.delete(`/material/${id}`);
+    dispatch(deleteContact(response.data.id));
   } catch (error) {
     dispatch(fetchingError(error.message));
   }
