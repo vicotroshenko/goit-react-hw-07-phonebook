@@ -10,41 +10,51 @@ export const Submit = styled.button`
 
 export const Form = styled.form`
 		border: 1px solid black;
-		padding: 10px;
+		padding: 30px;
 		width: 100%;
-		max-width: 300px;
-		margin-left: 20px;
-		border-radius: 5px;
+		max-width: 400px;
+		border-radius: 20px;
+		box-sizing: border-box;
+		border: 3px solid black;
 		& label {
 			display: block;
+			width: 100%;
+			margin: 0 auto;
 			margin-top: 15px;
+			
 			& input {
 				display: block;
+				width: 100%;
 				margin-top: 5px;
-				font-size: 18px;
-				border-radius: 5px;
+				padding: 5px;
+				font-size: 22px;
+				border-radius: 10px;
+				border: 3px solid black;
+				outline: none;
+				background-color: rgba(76, 151, 255, 0.4);
+				box-sizing: border-box;
 				&:hover {
-					border: 2px solid blue;
+					border: 3px solid rgba(255, 195, 0, 0.9);
 				}
 				&:focus {
-					border: 2px solid blue;
+					border: 2px solid rgba(255, 195, 0, 0.9);
 				}
 			}
 		}
 	& button {
 		margin-top: 10px;
-		border: none;
-		background-color: #2d75eb;
-		border-radius: 8px;
-		padding: 5px 10px;
+		border: 1px solid black;
+		background-color: rgba(76, 151, 255, 0.4);
+		border-radius: 10px;
+		padding: 10px 10px;
 		&:hover {
-			background-color: #4e90fc;
+			border: 1px solid rgba(255, 195, 0, 0.9);
 		}
 		&:focus {
-			background-color: #4e90fc;
+			border: 1px solid rgba(255, 195, 0, 0.9);
 		}
 		&:active {
-			background-color: #2d75eb;
+			border: 1px solid rgba(255, 195, 0, 0);
 		}
 	}
 `

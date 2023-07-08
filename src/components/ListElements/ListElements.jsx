@@ -1,22 +1,33 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilter } from 'redux/selectors';
+import { deleteContact } from 'redux/operations';
+import { Item } from './ListElements.styled';
 
-import { deleteItem } from 'redux/operations'; 
 
-export const ListElements = ({ id, name, number }) => {
+export const ListElements = () => {
   const dispatch = useDispatch();
-  const deleteElement = id => {
-    dispatch(deleteItem(id));
-  };
+  const { items } = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+
+
+  const getFilteredContacts = () =>
+    items.filter(({ id, name, phone }) => {
+      const nameListApproved = name ?? '';
+      return nameListApproved.toLowerCase().includes(filter.toLowerCase());
+    });
+  const contactList = getFilteredContacts();
 
   return (
     <>
-      <li>
-        {name}
-        <span>{number}</span>
-        <button type="button" onClick={() => deleteElement(id)}>
-          Delete
-        </button>
-      </li>
+      {contactList.map(({ id, name, phone }, index) => (
+        <Item key={index}>
+          {name}
+          <span>{phone}</span>
+          <button type="button" onClick={() => dispatch(deleteContact(id))}>
+            Delete
+          </button>
+        </Item>
+      ))}
     </>
   );
 };

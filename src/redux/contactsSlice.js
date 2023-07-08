@@ -1,4 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchContacts, addContact, deleteContact } from './operations';
+
+const handlePending = state => {
+  state.isLoading = true;
+};
+
+const handleRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+};
 
 const contactsInitialState = {
   items: [],
@@ -9,54 +19,34 @@ const contactsInitialState = {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: contactsInitialState,
-  reducers: {
-    fetchingInProgress(state) {
-      state.isLoading = true;
-    },
-    fetchingSuccess(state, action) {
+  extraReducers: {
+    [fetchContacts.pending]: handlePending,
+    [fetchContacts.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
       state.items = action.payload;
     },
-    fetchingError(state, action) {
+    [fetchContacts.rejected]: handleRejected,
+
+    [addContact.pending]: handlePending,
+    [addContact.fulfilled](state, action) {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error = null;
+      state.items.push(action.payload);
     },
-    addContact(state, action) {
-      return {
-        ...state,
-        items: [...state.items, action.payload],
-      };
+    [addContact.rejected]: handleRejected,
+
+    [deleteContact.pending]: handlePending,
+    [deleteContact.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const index = state.items.findIndex(
+        contact => contact.id === action.payload.id
+      );
+      state.items.splice(index, 1);
     },
-    deleteContact(state, action) {
-      return {
-        ...state,
-        items: state.items.filter(item => item.id !== action.payload),
-      };
-    },
+    [deleteContact.rejected]: handleRejected,
   },
 });
 
-const filterInitialState = '';
-
-const filterSlice = createSlice({
-  name: 'filter',
-  initialState: filterInitialState,
-  reducers: {
-    filterContact(state, action) {
-      return (state = action.payload);
-    },
-  },
-});
-
-export const {
-  addContact,
-  deleteContact,
-  fetchingInProgress,
-  fetchingSuccess,
-  fetchingError,
-} = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;
-
-export const { filterContact } = filterSlice.actions;
-export const filterReducer = filterSlice.reducer;
