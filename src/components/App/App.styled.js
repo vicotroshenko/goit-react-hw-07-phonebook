@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-		margin: 0 auto;
-		width: 50%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-`
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-end;
+`;

@@ -1,14 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts, getFilter } from 'redux/selectors';
 import { deleteContact } from 'redux/operations';
-import { Item } from './ListElements.styled';
-
+import { Item, ButtonDelete, Phone } from './ListElements.styled';
 
 export const ListElements = () => {
   const dispatch = useDispatch();
-  const { items } = useSelector(getContacts);
+  const { items, isLoading } = useSelector(getContacts);
   const filter = useSelector(getFilter);
-
 
   const getFilteredContacts = () =>
     items.filter(({ id, name, phone }) => {
@@ -22,10 +20,14 @@ export const ListElements = () => {
       {contactList.map(({ id, name, phone }, index) => (
         <Item key={index}>
           {name}
-          <span>{phone}</span>
-          <button type="button" onClick={() => dispatch(deleteContact(id))}>
+          <Phone>{phone}</Phone>
+          <ButtonDelete
+            type="button"
+            onClick={() => dispatch(deleteContact(id))}
+            disabled={isLoading}
+          >
             Delete
-          </button>
+          </ButtonDelete>
         </Item>
       ))}
     </>
